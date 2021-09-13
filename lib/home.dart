@@ -54,13 +54,13 @@ class _CalculoIMCState extends State<CalculoIMC> {
 
   void calcIMC(){
 
-    double peso = double.parse(entradaPeso.text);
-    double altura = double.parse(entradaAltura.text)/100;
+    double peso = double.parse(entradaPeso.text.replaceAll(",", "."));
+    double altura = double.parse(entradaAltura.text.replaceAll(",", "."))/100;
 
     setState(() {
 
       var imc = peso/(altura*altura);
-
+      imcValor = "Seu IMC é: ";
 
       if( imc < 18.5) {
         imcMensagem = 'ABAIXO DO PESO';
@@ -76,7 +76,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
         imcMensagem = 'OBESIDADE GRAU III';
       }
 
-      imcValor = (imc).toStringAsFixed(2);
+      imcValor+= (imc).toStringAsFixed(2);
 
     });
   }
@@ -122,6 +122,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
               padding: const EdgeInsets.fromLTRB(50,10,50,10),
               child:
               TextField(
+                maxLength: 5,
                 keyboardType: TextInputType.number,  // -> teclado que ira aparecer para inserir na caixa de texto input
                 controller: entradaPeso,
                 decoration: InputDecoration(
@@ -143,6 +144,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
               padding: const EdgeInsets.fromLTRB(50,10,50,10),
               child:
               TextField(
+                maxLength: 3,
                 keyboardType: TextInputType.number,  // -> teclado que ira aparecer para inserir na caixa de texto input
                 controller: entradaAltura,
                 decoration: InputDecoration(
@@ -171,9 +173,15 @@ class _CalculoIMCState extends State<CalculoIMC> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        calcIMC();
-                        // Respond to button press
-                      },
+                          try {
+                            calcIMC();
+                            // Respond to button press
+                          } catch(e) {
+                            setState(() {
+                              imcValor = "Erro: Digite o valor";
+                            });
+                          }
+                          },
                       child: Text("CALCULAR"),
                     ),
                   ),
@@ -191,9 +199,15 @@ class _CalculoIMCState extends State<CalculoIMC> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(50,10,10,10),
+                padding: const EdgeInsets.fromLTRB(50,20,10,10),
                 child: ListTile(
-                  title: Text('Seu IMC é: $imcValor'),
+                  title: Text( '$imcValor',
+                    style: TextStyle(
+                        fontSize: 27.0,
+                        color: Colors.yellow,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Roboto"),
+                  ),
                   leading: Icon(Icons.arrow_forward),
                 ),
               ),
@@ -201,7 +215,13 @@ class _CalculoIMCState extends State<CalculoIMC> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(50,10,10,10),
                 child: ListTile(
-                  title: Text( '$imcMensagem'),
+                  title: Text( '$imcMensagem',
+                    style: TextStyle(
+                    fontSize: 27.0,
+                    color: Colors.yellow,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Roboto"),
+                  ),
                   leading: Icon(Icons.arrow_forward),
                 ),
               ),
