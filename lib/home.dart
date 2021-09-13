@@ -25,6 +25,8 @@ class Home extends StatelessWidget {
 
 
 
+
+
 class CalculoIMC extends StatefulWidget {
   const CalculoIMC({Key? key}) : super(key: key);
 
@@ -33,24 +35,59 @@ class CalculoIMC extends StatefulWidget {
 }
 
 
-final TextEditingController entradaPeso = TextEditingController();
-final TextEditingController entradaAltura = TextEditingController();
-
-var tempV1 = '';
-var tempV2 = '';
-
-
-void coversor(){
-
-
-}
-
-
-
 
 
 
 class _CalculoIMCState extends State<CalculoIMC> {
+
+
+  final TextEditingController entradaPeso = TextEditingController();
+  final TextEditingController entradaAltura = TextEditingController();
+
+  var imcValor = '';
+  var imcMensagem = '';
+
+
+
+
+
+
+  void calcIMC(){
+
+    double peso = double.parse(entradaPeso.text);
+    double altura = double.parse(entradaAltura.text)/100;
+
+    setState(() {
+
+      var imc = peso/(altura*altura);
+
+
+      if( imc < 18.5) {
+        imcMensagem = 'ABAIXO DO PESO';
+      } else if(imc < 24.9 ) {
+        imcMensagem = 'PESO NORMAL';
+      } else if(imc < 29.9 ) {
+        imcMensagem = 'SOBREPESO';
+      } else if(imc < 34.9 ) {
+        imcMensagem = 'OBESIDADE GRAU I';
+      } else if(imc < 39.9 ) {
+        imcMensagem = 'OBESIDADE GRAU II';
+      } else {
+        imcMensagem = 'OBESIDADE GRAU III';
+      }
+
+      imcValor = (imc).toStringAsFixed(2);
+
+    });
+  }
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -89,7 +126,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
                 controller: entradaPeso,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Peso'),
+                    labelText: 'Peso em kg'),
                 style: TextStyle(fontSize:32.0,
                     color: const Color(0xFFDB9430),
                     fontWeight: FontWeight.w400,
@@ -110,7 +147,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
                 controller: entradaAltura,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Altura'),
+                    labelText: 'Altura em cm'),
                 style: TextStyle(fontSize:32.0,
                     color: const Color(0xFFDB9430),
                     fontWeight: FontWeight.w400,
@@ -134,7 +171,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        coversor();
+                        calcIMC();
                         // Respond to button press
                       },
                       child: Text("CALCULAR"),
@@ -156,7 +193,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(50,10,10,10),
                 child: ListTile(
-                  title: Text('$tempV1'),
+                  title: Text('Seu IMC é: $imcValor'),
                   leading: Icon(Icons.arrow_forward),
                 ),
               ),
@@ -164,7 +201,7 @@ class _CalculoIMCState extends State<CalculoIMC> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(50,10,10,10),
                 child: ListTile(
-                  title: Text('$tempV2'),
+                  title: Text( '$imcMensagem'),
                   leading: Icon(Icons.arrow_forward),
                 ),
               ),
