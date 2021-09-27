@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proj_calculo_imc/home.dart';
 
 
 
@@ -18,14 +19,19 @@ class Sobre extends StatelessWidget {
         child: ListView(
           children: [
             const UserAccountsDrawerHeader(
-                accountName: Text("DDMI"),
-                accountEmail: Text("ddmi@ddmi.com.br")),
+                accountName: Text("User"),
+                accountEmail: Text("User@user.com.br")),
             ListTile(
-              leading: const Icon(Icons.accessibility_new),
+              leading: const Icon(Icons.ad_units),
               title: const Text("Indice de Massa Corporal"),
-              subtitle: const Text("Cuidando de sua saude"),
+              subtitle: const Text("Calcular IMC"),
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_sharp),
