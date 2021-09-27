@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proj_calculo_imc/sobre.dart';
 
 
 
@@ -12,8 +13,36 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Calculo IMC'),
+        title: Text('App Calculo IMC'),
 
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const UserAccountsDrawerHeader(
+                accountName: Text("DDMI"),
+                accountEmail: Text("ddmi@ddmi.com.br")),
+            ListTile(
+              leading: const Icon(Icons.accessibility_new),
+              title: const Text("Indice de Massa Corporal"),
+              subtitle: const Text("Cuidando de sua saude"),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_balance_sharp),
+              title: const Text("Sobre"),
+              subtitle: const Text("Informações da aplicação"),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Sobre()),
+                );
+              },
+            )
+          ],
+        ),
       ),
 
       body: const CalculoIMC(),
