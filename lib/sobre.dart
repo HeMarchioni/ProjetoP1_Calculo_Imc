@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proj_calculo_imc/home.dart';
 
+import 'info.dart';
+
 
 
 class Sobre extends StatelessWidget {
@@ -31,6 +33,17 @@ class Sobre extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => const Home()),
                 );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.accessibility_new),
+              title: const Text("Indice de Massa Corporal"),
+              subtitle: const Text("Saiba Mais"),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Info()),
+              );
               },
             ),
             ListTile(

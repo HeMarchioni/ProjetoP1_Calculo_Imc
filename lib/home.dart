@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proj_calculo_imc/info.dart';
 import 'package:proj_calculo_imc/sobre.dart';
 
 
@@ -20,14 +21,30 @@ class Home extends StatelessWidget {
         child: ListView(
           children: [
             const UserAccountsDrawerHeader(
-                accountName: Text("DDMI"),
-                accountEmail: Text("ddmi@ddmi.com.br")),
+                accountName: Text("User"),
+                accountEmail: Text("User@user.com.br")),
+            ListTile(
+              leading: const Icon(Icons.ad_units),
+              title: const Text("Indice de Massa Corporal"),
+              subtitle: const Text("Calcular IMC"),
+              trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Home()),
+                );
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.accessibility_new),
               title: const Text("Indice de Massa Corporal"),
-              subtitle: const Text("Cuidando de sua saude"),
+              subtitle: const Text("Saiba Mais"),
               trailing: const Icon(Icons.arrow_forward_ios_rounded),
-              onTap: () {},
+              onTap: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Info()),
+              );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.account_balance_sharp),
@@ -252,6 +269,18 @@ class _CalculoIMCState extends State<CalculoIMC> {
                     fontFamily: "Roboto"),
                   ),
                   leading: Icon(Icons.arrow_forward),
+                ),
+              ),
+              Padding(
+                padding: const  EdgeInsets.fromLTRB(15,10,15,10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Info()),
+                    );
+                  },
+                  child: Text("Saiba Mais Sobre o IMC"),
                 ),
               ),
             ],
